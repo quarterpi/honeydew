@@ -32,3 +32,6 @@ honeydew-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# Ignore vim
+.*~
+*.*~
