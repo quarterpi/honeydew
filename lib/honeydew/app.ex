@@ -15,7 +15,7 @@ defmodule Honeydew.App do
         pool_size: 1
       ]
     ],
-    registry: local
+    registry: :local
 
   router(Honeydew.Router)
 end
