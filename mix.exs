@@ -56,6 +56,7 @@ defmodule Honeydew.MixProject do
       {:typed_struct, "~> 0.2.1"},
       {:exconstructor, "~> 1.2.4"},
       {:surface, "~> 0.6.1"},
+      {:base62, "~> 1.2"},
     ]
   end
 
