@@ -4,10 +4,10 @@ defmodule Honeydew.Please.List do
   """
 
   alias Honeydew.Please.List
-  alias Honeydew.Please.Commands{
+  alias Honeydew.Please.Commands.{
     AddList,
   }
-  alias Honeydew.Please.Events{
+  alias Honeydew.Please.Events.{
     ListAdded,
   }
 
