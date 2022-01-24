@@ -11,6 +11,7 @@ defmodule Honeydew.Please.Projections.List do
   schema "please_list" do
     field :name, :string
     field :notes, :string
+    field :status, :atom
 
     timestamps()
   end

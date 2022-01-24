@@ -6,6 +6,7 @@ defmodule Honeydew.Repo.Migrations.CreateLists do
       add :list_id, :string, primary_key: true
       add :name, :string
       add :notes, :string
+      add :status, :atom
 
       timestamps()
     end
