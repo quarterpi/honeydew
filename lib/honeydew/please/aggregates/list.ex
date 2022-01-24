@@ -28,6 +28,22 @@ defmodule Honeydew.Please.List do
     }
   end
 
+  def execute(%List{} = list, %CompleteList{list_id: list_id, notes: notes}) do
+    cond do
+      list.status == :active ->
+        %ListCompleted{
+          list_id: list_id,
+          notes: notes
+        }
+      list.status == :discarded ->
+        {:error, :list_discarded}
+      list.status == :completed ->
+        {:error, :list_already_completed}
+      true ->
+        {:error, :list_not_active}
+    end
+  end
+
   def apply(%List{} = list, %ListAdded{} = event) do
     %List{
       list
@@ -35,6 +51,14 @@ defmodule Honeydew.Please.List do
         name: event.name,
         notes: event.notes,
         status: :active
+    }
+  end
+
+  def apply(%List{} = list, %ListCompleted{} = event) do
+    %List{
+      list
+      | status: :completed,
+      notes: event.notes
     }
   end
 end

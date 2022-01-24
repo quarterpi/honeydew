@@ -8,6 +8,7 @@ defmodule Honeydew.Router do
   alias Honeydew.Please.List
   alias Honeydew.Please.Commands.{
     AddList,
+    CompleteList,
   }
 
   if Mix.env() == :dev do
@@ -19,6 +20,7 @@ defmodule Honeydew.Router do
   dispatch(
     [
       AddList,
+      CompleteList,
     ],
     to: List
   )
