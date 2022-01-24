@@ -1,17 +1,17 @@
 import Config
 
 # Configure the eventstore
-config :honeydew, Honeydew.Eventstore,
+config :honeydew, Honeydew.EventStore,
   username: "postgres",
   password: "postgres",
-  database: "noeydew_dev",
+  database: "honeydew_eventstore_dev",
   hostname: "localhost"
 
 # Configure your database
 config :honeydew, Honeydew.Repo,
   username: "postgres",
   password: "postgres",
-  database: "honeydew_dev",
+  database: "honeydew_readstore_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10

@@ -8,6 +8,8 @@ defmodule Honeydew.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      # Start the Commanded Application
+      Honeydew.App,
       # Start the Ecto repository
       Honeydew.Repo,
       # Start the Telemetry supervisor

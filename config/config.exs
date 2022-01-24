@@ -7,6 +7,13 @@
 # General application configuration
 import Config
 
+config :commanded, event_store_adapter: Commanded.EventStore.Addapters.EventStore
+
+config :commanded_ecto_projections, repo: Honeydew.Repo
+
+config :honeydew,
+  event_stores: [Honeydew.EventStore]
+
 config :honeydew,
   ecto_repos: [Honeydew.Repo]
 
