@@ -7,10 +7,12 @@ defmodule Honeydew.Please.List do
   alias Honeydew.Please.Commands.{
     AddList,
     CompleteList,
+    DiscardList,
   }
   alias Honeydew.Please.Events.{
     ListAdded,
     ListCompleted,
+    ListDiscarded,
   }
 
   defstruct [
@@ -44,6 +46,22 @@ defmodule Honeydew.Please.List do
     end
   end
 
+  def execute(%List{} = list, %DiscardList{list_id: list_id, notes: notes}) do
+    cond do
+      list.status == :active ->
+        %ListDiscarded{
+          list_id: list_id,
+          notes: notes
+        }
+      list.status == :completed ->
+        {:error, :list_completed}
+      list.status == :discarded ->
+        {:error, :list_already_discarded}
+      true ->
+        {:error, :list_not_active}
+    end
+  end
+
   def apply(%List{} = list, %ListAdded{} = event) do
     %List{
       list
@@ -58,6 +76,14 @@ defmodule Honeydew.Please.List do
     %List{
       list
       | status: :completed,
+      notes: event.notes
+    }
+  end
+
+  def apply(%List{} = list, %ListDiscarded{} = event) do
+    %List{
+      list
+      | status: :discarded,
       notes: event.notes
     }
   end
