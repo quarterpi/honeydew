@@ -9,12 +9,14 @@ defmodule Honeydew.Please.Task do
     CompleteTask,
     ThwartTask,
     RemoveTask,
+    ReactivateTask,
   }
   alias Honeydew.Please.Events.{
     TaskAdded,
     TaskCompleted,
     TaskThwarted,
     TaskRemoved,
+    TaskReactivated,
   }
 
   defstruct [
@@ -83,6 +85,18 @@ defmodule Honeydew.Please.Task do
     end
   end
 
+  def execute(%Task{} = task, %ReactivateTask{task_id: task_id, notes: notes}) do
+    cond do
+      task.status == :active ->
+        {:error, :task_already_active}
+      true ->
+        %TaskReactivated{
+          task_id: task_id,
+          notes: notes
+        }
+    end
+  end
+
   def apply(%Task{} = task, %TaskAdded{} = event) do
     %Task{
       task
@@ -115,6 +129,14 @@ defmodule Honeydew.Please.Task do
       task
       | notes: event.notes,
       status: :removed
+    }
+  end
+
+  def apply(%Task{} = task, %TaskReactivated{} = event) do
+    %Task{
+      task
+      | notes: event.notes,
+      status: :active
     }
   end
 end
