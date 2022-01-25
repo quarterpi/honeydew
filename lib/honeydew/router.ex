@@ -6,11 +6,13 @@ defmodule Honeydew.Router do
   use Commanded.Commands.Router
 
   alias Honeydew.Please.List
+  alias Honeydew.Please.Task
   alias Honeydew.Please.Commands.{
     AddList,
     CompleteList,
     DiscardList,
     ReactivateList,
+    AddTask,
   }
 
   if Mix.env() == :dev do
@@ -18,6 +20,7 @@ defmodule Honeydew.Router do
   end
 
   identify(List, by: :list_id)
+  identify(Task, by: :task_id)
 
   dispatch(
     [
@@ -27,6 +30,13 @@ defmodule Honeydew.Router do
       ReactivateList,
     ],
     to: List
+  )
+
+  dispatch(
+    [
+      AddTask,
+    ],
+    to: Task
   )
 
 

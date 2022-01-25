@@ -14,6 +14,7 @@ defmodule Honeydew.Application do
       Honeydew.Repo,
       # Start the Pojectors
       Honeydew.Please.Projectors.List,
+      Honeydew.Please.Projectors.Task,
       # Start the Telemetry supervisor
       HoneydewWeb.Telemetry,
       # Start the PubSub system
