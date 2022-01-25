@@ -6,10 +6,12 @@ defmodule Honeydew.Please.Task do
   alias Honeydew.Please.Task
   alias Honeydew.Please.Commands.{
     AddTask,
+    CompleteTask,
     ThwartTask,
   }
   alias Honeydew.Please.Events.{
     TaskAdded,
+    TaskCompleted,
     TaskThwarted,
   }
 
@@ -31,6 +33,24 @@ defmodule Honeydew.Please.Task do
     }
   end
 
+  def execute(%Task{} = task, %CompleteTask{task_id: task_id, notes: notes}) do
+    cond do
+      task.status == :active ->
+        %TaskCompleted{
+          task_id: task_id,
+          notes: notes
+        }
+      task.status == :completed ->
+        {:error, :task_already_completed}
+      task.status == :thwarted ->
+        {:error, :task_was_thwarted}
+      task.status == :removed ->
+        {:error, :task_was_removed}
+      true ->
+        {:error, :task_not_active}
+    end
+  end
+
   def execute(%Task{} = task, %ThwartTask{task_id: task_id, notes: notes}) do
     cond do
       task.status == :active ->
@@ -38,12 +58,12 @@ defmodule Honeydew.Please.Task do
           task_id: task_id,
           notes: notes
         }
+      task.status == :completed ->
+        {:error, :task_was_completed}
       task.status == :thwarted ->
         {:error, :task_already_thwarted}
       task.status == :removed ->
         {:error, :task_was_removed}
-      task.status == :completed ->
-        {:error, :task_was_completed}
       true ->
         {:error, :task_not_active}
     end
@@ -60,7 +80,15 @@ defmodule Honeydew.Please.Task do
     }
   end
 
-  def apply(%Task{} = task, %TaskThwarted{task_id: task_id, notes: notes} = event) do
+  def apply(%Task{} = task, %TaskCompleted{} = event) do
+    %Task{
+      task
+      | notes: event.notes,
+      status: :completed
+    }
+  end
+
+  def apply(%Task{} = task, %TaskThwarted{} = event) do
     %Task{
       task
       | notes: event.notes,

@@ -13,6 +13,7 @@ defmodule Honeydew.Router do
     DiscardList,
     ReactivateList,
     AddTask,
+    CompleteTask,
     ThwartTask,
   }
 
@@ -36,6 +37,7 @@ defmodule Honeydew.Router do
   dispatch(
     [
       AddTask,
+      CompleteTask,
       ThwartTask,
     ],
     to: Task

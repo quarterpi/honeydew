@@ -10,6 +10,7 @@ defmodule Honeydew.Please.Projectors.Task do
 
   alias Honeydew.Please.Events.{
     TaskAdded,
+    TaskCompleted,
     TaskThwarted,
   }
   alias Honeydew.Please.Projections.Task
@@ -22,6 +23,15 @@ defmodule Honeydew.Please.Projectors.Task do
       notes: notes,
       status: "active"
     })
+  end
+
+  project %TaskCompleted{task_id: task_id, notes: notes}, fn multi ->
+    update_task(multi, task_id,
+      set: [
+        notes: notes,
+        status: "completed"
+      ]
+    )
   end
 
   project %TaskThwarted{task_id: task_id, notes: notes}, fn multi ->
