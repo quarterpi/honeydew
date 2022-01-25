@@ -10,6 +10,7 @@ defmodule Honeydew.Please.Projectors.Task do
 
   alias Honeydew.Please.Events.{
     TaskAdded,
+    TaskThwarted,
   }
   alias Honeydew.Please.Projections.Task
 
@@ -21,6 +22,23 @@ defmodule Honeydew.Please.Projectors.Task do
       notes: notes,
       status: "active"
     })
+  end
+
+  project %TaskThwarted{task_id: task_id, notes: notes}, fn multi ->
+    update_task(multi, task_id,
+      set: [
+        notes: notes,
+        status: "thwarted"
+      ]
+    )
+  end
+
+  defp update_task(multi, task_id, updates) do
+    Ecto.Multi.update_all(multi, :please_task, task_query(task_id), updates)
+  end
+
+  defp task_query(task_id) do
+    from(t in Task, where: t.task_id == ^task_id)
   end
 
 end

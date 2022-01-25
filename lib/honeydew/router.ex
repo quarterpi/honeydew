@@ -13,6 +13,7 @@ defmodule Honeydew.Router do
     DiscardList,
     ReactivateList,
     AddTask,
+    ThwartTask,
   }
 
   if Mix.env() == :dev do
@@ -35,6 +36,7 @@ defmodule Honeydew.Router do
   dispatch(
     [
       AddTask,
+      ThwartTask,
     ],
     to: Task
   )
