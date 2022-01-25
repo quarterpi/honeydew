@@ -12,6 +12,8 @@ defmodule Honeydew.Application do
       Honeydew.App,
       # Start the Ecto repository
       Honeydew.Repo,
+      # Start the Pojectors
+      Honeydew.Please.Projectors.List,
       # Start the Telemetry supervisor
       HoneydewWeb.Telemetry,
       # Start the PubSub system

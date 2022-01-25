@@ -8,10 +8,10 @@ defmodule Honeydew.Please.Projections.List do
 
   @primary_key {:list_id, :string, []}
 
-  schema "please_list" do
+  schema "please_lists" do
     field :name, :string
     field :notes, :string
-    field :status, :atom
+    field :status, :string
 
     timestamps()
   end

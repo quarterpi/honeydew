@@ -8,11 +8,13 @@ defmodule Honeydew.Please.List do
     AddList,
     CompleteList,
     DiscardList,
+    ReactivateList,
   }
   alias Honeydew.Please.Events.{
     ListAdded,
     ListCompleted,
     ListDiscarded,
+    ListReactivated,
   }
 
   defstruct [
@@ -22,6 +24,7 @@ defmodule Honeydew.Please.List do
     :status,
   ]
   
+  def execute(%List{list_id: list_id}, %AddList{list_id: id}) when list_id == id, do: {:error, :list_already_exists}
   def execute(%List{list_id: nil}, %AddList{list_id: list_id, name: name, notes: notes}) do
     %ListAdded{
       list_id: list_id,
@@ -62,6 +65,18 @@ defmodule Honeydew.Please.List do
     end
   end
 
+  def execute(%List{} = list, %ReactivateList{list_id: list_id, notes: notes}) do
+    cond do
+      list.status == :active ->
+        {:error, :list_already_active}
+      true ->
+        %ListReactivated{
+          list_id: list_id,
+          notes: notes
+        }
+    end
+  end
+
   def apply(%List{} = list, %ListAdded{} = event) do
     %List{
       list
@@ -84,6 +99,14 @@ defmodule Honeydew.Please.List do
     %List{
       list
       | status: :discarded,
+      notes: event.notes
+    }
+  end
+
+  def apply(%List{} = list, %ListReactivated{} = event) do
+    %List{
+      list
+      | status: :active,
       notes: event.notes
     }
   end

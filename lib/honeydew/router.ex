@@ -10,6 +10,7 @@ defmodule Honeydew.Router do
     AddList,
     CompleteList,
     DiscardList,
+    ReactivateList,
   }
 
   if Mix.env() == :dev do
@@ -23,6 +24,7 @@ defmodule Honeydew.Router do
       AddList,
       CompleteList,
       DiscardList,
+      ReactivateList,
     ],
     to: List
   )

@@ -1,16 +1,17 @@
 defmodule Honeydew.Please.Projectors.List do
-  @moduldoc """
+  @moduledoc """
   Projector for List read model.
   """
   use Commanded.Projections.Ecto,
     application: Honeydew.App,
     name: "please_list_projection",
-    repo: Ecto.Repo
+    repo: Honeydew.Repo
 
   alias Honeydew.Please.Events.{
     ListAdded,
     ListCompleted,
     ListDiscarded,
+    ListReactivated,
   }
   alias Honeydew.Please.Projections.List
   
@@ -19,7 +20,7 @@ defmodule Honeydew.Please.Projectors.List do
       list_id: list_id,
       name: name,
       notes: notes,
-      status: :active
+      status: "active"
     })
   end
 
@@ -27,7 +28,7 @@ defmodule Honeydew.Please.Projectors.List do
     update_list(multi, list_id,
       set: [
         notes: notes,
-        status: :completed
+        status: "completed"
       ]
     )
   end
@@ -36,7 +37,16 @@ defmodule Honeydew.Please.Projectors.List do
     update_list(multi, list_id,
       set: [
         notes: notes,
-        status: :discarded
+        status: "discarded"
+      ]
+    )
+  end
+
+  project %ListReactivated{list_id: list_id, notes: notes}, fn multi ->
+    update_list(multi, list_id,
+      set: [
+        notes: notes,
+        status: "active"
       ]
     )
   end
