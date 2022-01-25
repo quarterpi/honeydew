@@ -8,11 +8,13 @@ defmodule Honeydew.Please.Task do
     AddTask,
     CompleteTask,
     ThwartTask,
+    RemoveTask,
   }
   alias Honeydew.Please.Events.{
     TaskAdded,
     TaskCompleted,
     TaskThwarted,
+    TaskRemoved,
   }
 
   defstruct [
@@ -69,6 +71,18 @@ defmodule Honeydew.Please.Task do
     end
   end
 
+  def execute(%Task{} = task, %RemoveTask{task_id: task_id, notes: notes}) do
+    cond do
+      task.status == :removed ->
+        {:error, :task_was_removed}
+      true->
+        %TaskRemoved{
+          task_id: task_id,
+          notes: notes
+        }
+    end
+  end
+
   def apply(%Task{} = task, %TaskAdded{} = event) do
     %Task{
       task
@@ -93,6 +107,14 @@ defmodule Honeydew.Please.Task do
       task
       | notes: event.notes,
       status: :thwarted
+    }
+  end
+
+  def apply(%Task{} = task, %TaskRemoved{} = event) do
+    %Task{
+      task
+      | notes: event.notes,
+      status: :removed
     }
   end
 end

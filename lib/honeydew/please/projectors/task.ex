@@ -12,6 +12,7 @@ defmodule Honeydew.Please.Projectors.Task do
     TaskAdded,
     TaskCompleted,
     TaskThwarted,
+    TaskRemoved,
   }
   alias Honeydew.Please.Projections.Task
 
@@ -39,6 +40,15 @@ defmodule Honeydew.Please.Projectors.Task do
       set: [
         notes: notes,
         status: "thwarted"
+      ]
+    )
+  end
+
+  project %TaskRemoved{task_id: task_id, notes: notes}, fn multi ->
+    update_task(multi, task_id,
+      set: [
+        notes: notes,
+        status: "removed"
       ]
     )
   end

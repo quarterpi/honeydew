@@ -15,6 +15,7 @@ defmodule Honeydew.Router do
     AddTask,
     CompleteTask,
     ThwartTask,
+    RemoveTask,
   }
 
   if Mix.env() == :dev do
@@ -39,6 +40,7 @@ defmodule Honeydew.Router do
       AddTask,
       CompleteTask,
       ThwartTask,
+      RemoveTask,
     ],
     to: Task
   )
