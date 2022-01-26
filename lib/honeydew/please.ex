@@ -5,8 +5,15 @@ defmodule Honeydew.Please do
 
   import Ecto.Query, warn: false
   alias Honeydew.Repo
+  alias Honeydew.App
+  alias Honeydew.Support.CustomId
 
-  alias Honeydew.Please.List
+  alias Honeydew.Please.Commands.{
+    MakeList,
+  }
+  alias Honeydew.Please.Projections.{
+    List,
+  }
 
   @doc """
   Returns the list of lists.
@@ -19,5 +26,14 @@ defmodule Honeydew.Please do
   """
   def list_lists do
     Repo.all(List)
+  end
+
+  def make_list(name, notes) do
+    list = %MakeList{
+      list_id: CustomId.new(),
+      name: name,
+      notes: notes
+    }
+    App.dispatch(list)
   end
 end

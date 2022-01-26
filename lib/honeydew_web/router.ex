@@ -17,7 +17,7 @@ defmodule HoneydewWeb.Router do
   scope "/", HoneydewWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    live "/", ListsLive, :index
   end
 
   # Other scopes may use custom stacks.
