@@ -1,6 +1,6 @@
-defmodule Honeydew.Please.Events.ListAdded do
+defmodule Honeydew.Please.Events.ListMade do
   @moduledoc """
-  Event that signals a new list was added.
+  Event that signals a new list was made.
   """
 
   @derive Jason.Encoder

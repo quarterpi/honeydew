@@ -8,7 +8,7 @@ defmodule Honeydew.Router do
   alias Honeydew.Please.List
   alias Honeydew.Please.Task
   alias Honeydew.Please.Commands.{
-    AddList,
+    MakeList,
     CompleteList,
     DiscardList,
     ReactivateList,
@@ -28,7 +28,7 @@ defmodule Honeydew.Router do
 
   dispatch(
     [
-      AddList,
+      MakeList,
       CompleteList,
       DiscardList,
       ReactivateList,

@@ -1,6 +1,6 @@
-defmodule Honeydew.Please.Commands.AddList do
+defmodule Honeydew.Please.Commands.MakeList do
   @moduledoc """
-  Command to add a new list.
+  Command to make a new list.
   """
 
   defstruct [

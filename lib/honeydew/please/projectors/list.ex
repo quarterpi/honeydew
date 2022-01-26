@@ -8,14 +8,14 @@ defmodule Honeydew.Please.Projectors.List do
     repo: Honeydew.Repo
 
   alias Honeydew.Please.Events.{
-    ListAdded,
+    ListMade,
     ListCompleted,
     ListDiscarded,
     ListReactivated,
   }
   alias Honeydew.Please.Projections.List
   
-  project %ListAdded{list_id: list_id, name: name, notes: notes}, fn multi ->
+  project %ListMade{list_id: list_id, name: name, notes: notes}, fn multi ->
     Ecto.Multi.insert(multi, :please_list, %List{
       list_id: list_id,
       name: name,
