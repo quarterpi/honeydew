@@ -61,11 +61,12 @@ config :honeydew, HoneydewWeb.Endpoint,
 
 # Watch static and templates for browser reloading.
 config :honeydew, HoneydewWeb.Endpoint,
+  reloadable_compilers: [:gettext, :elixir, :surface],
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/honeydew_web/(live|views)/.*(ex)$",
+      ~r"lib/honeydew_web/(live|views|components)/.*(ex|sface|js)$",
       ~r"lib/honeydew_web/templates/.*(eex)$"
     ]
   ]

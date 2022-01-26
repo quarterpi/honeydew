@@ -35,3 +35,6 @@ npm-debug.log
 # Ignore vim
 .*~
 *.*~
+
+# Ignore generated js hook files for components
+assets/js/_hooks/

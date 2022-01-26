@@ -7,7 +7,7 @@ defmodule Honeydew.MixProject do
       version: "0.1.0",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:gettext] ++ Mix.compilers(),
+      compilers: [:gettext] ++ Mix.compilers() ++ [:surface],
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -57,6 +57,7 @@ defmodule Honeydew.MixProject do
       {:exconstructor, "~> 1.2.4"},
       {:surface, "~> 0.6.1"},
       {:base62, "~> 1.2"},
+      {:surface_formatter, "~> 0.6.0"}
     ]
   end
 
