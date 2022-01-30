@@ -6,12 +6,13 @@ defmodule HoneydewWeb.ListsLive do
 
   alias Honeydew.Please
 
+  alias Surface.Components.Link.Button
   alias Surface.Components.Form
   alias Surface.Components.Form.{
     Field,
     Label,
     TextInput,
-    Submit
+    Submit,
   }
 
   data lists, :list, default: []
@@ -36,7 +37,7 @@ defmodule HoneydewWeb.ListsLive do
           <div class="list__item--spacer">
           </div>
         </div>
-        <div class="list__item--body list__item--make" :on-click="show_make">
+        <div class="list__item--body list__item--make" :on-click="toggle_make">
           <h3>Add A List</h3>
         </div>
       </div>
@@ -54,7 +55,7 @@ defmodule HoneydewWeb.ListsLive do
         {/for}
       {/if}
     </div>
-    <div class="make__list make__list__visible">
+    <div class={"make__list", "make__list--visible": @show_make?, "make__list--hidden": !@show_make?}>
       <div class="form__container">
         <Form for={:list} submit="add_list">
           <Field name="name" >
@@ -66,13 +67,20 @@ defmodule HoneydewWeb.ListsLive do
             <TextInput field="notes" />
           </Field>
           <Submit label="Save" />
+          <button class="button-cancel" :on-click="toggle_make" >Cancel</button>
         </Form>
       </div>
     </div>
     """
   end
 
-  def handle_event("add_list", _, socket) do
-    {:noreply, socket}
+  def handle_event("toggle_make", _, socket) do
+    {:noreply, assign(socket, show_make?: !socket.assigns.show_make?)}
   end
+
+  def handle_event("add_list", %{"list" => %{"name" => name, "notes" => notes }}, socket) do
+    Please.make_list(name, notes)
+    {:noreply, assign(socket, show_make?: false)}
+  end
+
 end

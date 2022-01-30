@@ -154,4 +154,20 @@
 
 .make__list {
   display: flex;
+  position: fixed;
+  top: 40%;
+  left: 42%;
+  background-color: #f4f4f4;
+  padding: 25px;
+  border: 1px solid #d7d7d7;
+  border-radius: 10px 10px 10px 10px;
 }
+
+.make__list--visible {
+  visibility: visible;
+}
+
+.make__list--hidden {
+  visibility: hidden;
+}
+
