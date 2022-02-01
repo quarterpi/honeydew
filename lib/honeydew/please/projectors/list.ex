@@ -14,6 +14,7 @@ defmodule Honeydew.Please.Projectors.List do
     ListReactivated,
   }
   alias Honeydew.Please.Projections.List
+  alias HoneydewWeb.Endpoint
   
   project %ListMade{list_id: list_id, name: name, notes: notes}, fn multi ->
     Ecto.Multi.insert(multi, :please_list, %List{
@@ -51,11 +52,29 @@ defmodule Honeydew.Please.Projectors.List do
     )
   end
 
+  def after_update(%ListMade{} = event, _metadata, _changes) do
+    list = 
+      %List{
+        list_id: event.list_id,
+        name: event.name,
+        notes: event.notes,
+        status: "active"
+      }
+
+    list
+    |> broadcast("list_made")
+    :ok
+  end
+
   defp update_list(multi, list_id, updates) do
     Ecto.Multi.update_all(multi, :please_list, list_query(list_id), updates)
   end
 
   defp list_query(list_id) do
     from(l in List, where: l.list_id == ^list_id)
+  end
+
+  defp broadcast(%List{} = list, event) do
+    Endpoint.broadcast("lists", event, list.list_id)
   end
 end

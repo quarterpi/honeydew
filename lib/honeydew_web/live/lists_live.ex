@@ -17,9 +17,11 @@ defmodule HoneydewWeb.ListsLive do
 
   data lists, :list, default: []
   data show_make?, :boolean, default: false
+  @topic "lists"
 
   def mount(_params, _session, socket) do
     lists = Please.list_lists()
+    HoneydewWeb.Endpoint.subscribe(@topic)
     socket = 
       socket
       |> Surface.init()
@@ -27,6 +29,17 @@ defmodule HoneydewWeb.ListsLive do
         lists: lists,
       )
     {:ok, socket}
+  end
+
+  def handle_info(%{event: "list_made"}, socket) do
+    IO.inspect(socket)
+    lists = Please.list_lists()
+
+    socket = 
+      socket
+      |> assign(lists: lists)
+
+    {:noreply, socket}
   end
 
   def render(assigns) do
@@ -57,7 +70,7 @@ defmodule HoneydewWeb.ListsLive do
     </div>
     <div class={"make__list", "make__list--visible": @show_make?, "make__list--hidden": !@show_make?}>
       <div class="form__container">
-        <Form for={:list} submit="add_list">
+        <Form for={:list} submit="make_list">
           <Field name="name" >
             <Label />
             <TextInput field="name" />
@@ -67,7 +80,7 @@ defmodule HoneydewWeb.ListsLive do
             <TextInput field="notes" />
           </Field>
           <Submit label="Save" />
-          <button class="button-cancel" :on-click="toggle_make" >Cancel</button>
+          <button class="button-cancel" type="button" :on-click="toggle_make" >Cancel</button>
         </Form>
       </div>
     </div>
@@ -78,7 +91,7 @@ defmodule HoneydewWeb.ListsLive do
     {:noreply, assign(socket, show_make?: !socket.assigns.show_make?)}
   end
 
-  def handle_event("add_list", %{"list" => %{"name" => name, "notes" => notes }}, socket) do
+  def handle_event("make_list", %{"list" => %{"name" => name, "notes" => notes }}, socket) do
     Please.make_list(name, notes)
     {:noreply, assign(socket, show_make?: false)}
   end
