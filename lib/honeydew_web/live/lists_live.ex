@@ -20,7 +20,7 @@ defmodule HoneydewWeb.ListsLive do
   @topic "lists"
 
   def mount(_params, _session, socket) do
-    lists = Please.list_lists()
+    lists = Please.list_active_lists()
     HoneydewWeb.Endpoint.subscribe(@topic)
     socket = 
       socket
@@ -33,12 +33,21 @@ defmodule HoneydewWeb.ListsLive do
 
   def handle_info(%{event: "list_made"}, socket) do
     IO.inspect(socket)
-    lists = Please.list_lists()
+    lists = Please.list_active_lists()
 
     socket = 
       socket
       |> assign(lists: lists)
 
+    {:noreply, socket}
+  end
+
+  def handle_info(%{event: "list_discarded", payload: list_id}, socket) do
+    lists = Please.list_active_lists()
+
+    socket = 
+      socket
+      |> assign(lists: lists)
     {:noreply, socket}
   end
 
@@ -58,7 +67,7 @@ defmodule HoneydewWeb.ListsLive do
         {#for l <- @lists}
         <div class="list__item" id={l.list_id}>
           <div class="list__item--header">
-            <div class="list__item--discard">X</div>
+            <div class="list__item--discard" :on-click="discard_list" phx-value-id={l.list_id}>X</div>
           </div>
           <div class="list__item--body">
             <h3 class="list__item--name">{l.name}</h3>
@@ -94,6 +103,11 @@ defmodule HoneydewWeb.ListsLive do
   def handle_event("make_list", %{"list" => %{"name" => name, "notes" => notes }}, socket) do
     Please.make_list(name, notes)
     {:noreply, assign(socket, show_make?: false)}
+  end
+
+  def handle_event("discard_list", %{"id" => list_id}, socket) do
+    Please.discard_list(list_id, "")
+    {:noreply, socket}
   end
 
 end

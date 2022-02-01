@@ -66,6 +66,19 @@ defmodule Honeydew.Please.Projectors.List do
     :ok
   end
 
+  def after_update(%ListDiscarded{} = event, _metadata, _changes) do
+    list = 
+      %List{
+        list_id: event.list_id,
+        notes: event.notes,
+        status: "discarded"
+      }
+
+    list
+    |> broadcast("list_discarded")
+    :ok
+  end
+
   defp update_list(multi, list_id, updates) do
     Ecto.Multi.update_all(multi, :please_list, list_query(list_id), updates)
   end

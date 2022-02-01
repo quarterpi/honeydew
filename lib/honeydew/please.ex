@@ -10,9 +10,13 @@ defmodule Honeydew.Please do
 
   alias Honeydew.Please.Commands.{
     MakeList,
+    DiscardList,
   }
   alias Honeydew.Please.Projections.{
     List,
+  }
+  alias Honeydew.Please.Queries.{
+    ActiveLists,
   }
 
   @doc """
@@ -28,6 +32,10 @@ defmodule Honeydew.Please do
     Repo.all(List)
   end
 
+  def list_active_lists do
+    ActiveLists.new() |> Repo.all()
+  end
+
   def make_list(name, notes) do
     list = %MakeList{
       list_id: CustomId.new(),
@@ -35,5 +43,14 @@ defmodule Honeydew.Please do
       notes: notes
     }
     App.dispatch(list)
+  end
+
+  def discard_list(list_id, notes) do
+    discard = %DiscardList{
+      list_id: list_id,
+      notes: notes
+    }
+
+    App.dispatch(discard)
   end
 end
