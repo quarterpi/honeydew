@@ -33,7 +33,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 This is a SUPER rough example meant to get you started without much hassle. It's not meant to be a complete guide. 
 
 If you have any questions, feel free to reach out to me: 
-  on the Elixir Slack @threequarterspi.
-  on twitter @threequarterspi
-  on github @quarterpi
+  * on the Elixir Slack @threequarterspi.
+  * on twitter @threequarterspi
+  * on github @quarterpi
 
