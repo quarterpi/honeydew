@@ -69,7 +69,7 @@ defmodule HoneydewWeb.ListsLive do
           <div class="list__item--header">
             <div class="list__item--discard" :on-click="discard_list" phx-value-id={l.list_id}>X</div>
           </div>
-          <div class="list__item--body">
+          <div class="list__item--body" :on-click="show_detail" phx-value-id={l.list_id}>
             <h3 class="list__item--name">{l.name}</h3>
             <h6 class="list__item--notes">{l.notes}</h6>
           </div>
@@ -110,4 +110,10 @@ defmodule HoneydewWeb.ListsLive do
     {:noreply, socket}
   end
 
+  def handle_event("show_detail", %{"id" => list_id}, socket) do
+    {:noreply, push_redirect(socket, to: Routes.lists_detail_path(socket, :detail,  list_id))}
+  end
+
+
 end
+

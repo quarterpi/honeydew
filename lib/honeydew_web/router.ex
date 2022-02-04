@@ -18,6 +18,7 @@ defmodule HoneydewWeb.Router do
     pipe_through :browser
 
     live "/", ListsLive, :index
+    live "/list/:list_id", ListsLive.Detail, :detail
   end
 
   # Other scopes may use custom stacks.
