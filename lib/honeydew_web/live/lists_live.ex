@@ -103,7 +103,7 @@ defmodule HoneydewWeb.ListsLive do
   end
 
   def handle_event("make_list", %{"list" => %{"name" => name, "notes" => notes}}, socket) do
-    Please.make_list(name, notes)
+    Please.create_list(name: name, notes: notes)
     {:noreply, assign(socket, show_make?: false)}
   end
 

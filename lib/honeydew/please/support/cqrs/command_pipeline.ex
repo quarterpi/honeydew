@@ -24,6 +24,6 @@ defmodule Honeydew.Cqrs.CommandPipeline do
     context
     |> Map.update!(:opts, &Enum.into(&1, %{}))
     |> Map.update!(:message, &Map.from_struct(&1))
-    |> Map.take([:created_at, :message, :message_type, :opts, :user])
+    |> Map.take([:created_at, :message, :message_module, :message_type, :opts, :user])
   end
 end
