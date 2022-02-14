@@ -5,8 +5,6 @@ defmodule Honeydew.Please do
 
   use Cqrs.BoundedContext
 
-  import Ecto.Query, warn: false
-
   alias Honeydew.Please.Commands
   alias Honeydew.Please.Queries
 
