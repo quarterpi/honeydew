@@ -47,12 +47,7 @@ defmodule Honeydew.Please.List do
   def execute(_state, %ReactivateList{} = command),
     do: ReactivateList.list_reactivated(command)
 
-  alias Honeydew.Please.Events.{
-    ListMade,
-    ListCompleted,
-    ListDiscarded,
-    ListReactivated
-  }
+  alias Honeydew.Please.Events.{ListMade, ListCompleted, ListDiscarded, ListReactivated}
 
   def apply(state, %ListMade{} = event) do
     values = Map.take(event, [:list_id, :status])

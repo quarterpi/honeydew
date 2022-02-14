@@ -5,15 +5,7 @@ defmodule Honeydew.Please.Task do
   Aggregate for Tasks in Please context.
   """
 
-  alias Honeydew.Please.Task
-
-  alias Honeydew.Please.Commands.{
-    AddTask,
-    CompleteTask,
-    ThwartTask,
-    RemoveTask,
-    ReactivateTask
-  }
+  alias Honeydew.Please.Commands.{AddTask, CompleteTask, ThwartTask, RemoveTask, ReactivateTask}
 
   alias Honeydew.Please.Events.{
     TaskAdded,
@@ -56,7 +48,7 @@ defmodule Honeydew.Please.Task do
       :completed -> {:error, :task_was_completed}
       :thwarted -> {:error, :task_already_thwarted}
       :removed -> {:error, :task_was_removed}
-      true -> {:error, :task_not_active}
+      _ -> {:error, :task_not_active}
     end
   end
 
