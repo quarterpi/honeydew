@@ -16,7 +16,7 @@ defmodule Honeydew.Please.Commands.AddTask do
 
   @impl true
   def after_validate(command) do
-    %{command | list_id: Honeydew.CustomId.new()}
+    %{command | task_id: Honeydew.CustomId.new()}
   end
 
   derive_event Honeydew.Please.Events.TaskAdded do
