@@ -9,6 +9,9 @@ defmodule Honeydew.App do
       adapter: Commanded.EventStore.Adapters.EventStore,
       event_store: Honeydew.EventStore
     ],
+    default_dispatch_opts: [
+      returning: :execution_result
+    ],
     pubsub: [
       phoenix_pubsub: [
         adapter: Phoenix.PubSub.PG2,

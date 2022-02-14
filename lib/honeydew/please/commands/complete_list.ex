@@ -3,10 +3,15 @@ defmodule Honeydew.Please.Commands.CompleteList do
   Command to mark list as completed.
   """
 
-  defstruct [
-    :list_id,
-    :notes
-  ]
+  use Cqrs.Command
+  use Cqrs.Command.EventDerivation
 
-  use ExConstructor
+  field :list_id, :string
+  field :notes, :string
+
+  derive_event Honeydew.Please.Events.ListCompleted do
+    @moduledoc """
+    Event that signals a list was completed.
+    """
+  end
 end

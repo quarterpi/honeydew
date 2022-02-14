@@ -11,71 +11,72 @@ defmodule Honeydew.Please.Projectors.List do
     ListMade,
     ListCompleted,
     ListDiscarded,
-    ListReactivated,
+    ListReactivated
   }
+
   alias Honeydew.Please.Projections.List
   alias HoneydewWeb.Endpoint
-  
-  project %ListMade{list_id: list_id, name: name, notes: notes}, fn multi ->
+
+  project(%ListMade{list_id: list_id, name: name, notes: notes}, fn multi ->
     Ecto.Multi.insert(multi, :please_list, %List{
       list_id: list_id,
       name: name,
       notes: notes,
-      status: "active"
+      status: :active
     })
-  end
+  end)
 
-  project %ListCompleted{list_id: list_id, notes: notes}, fn multi ->
+  project(%ListCompleted{list_id: list_id, notes: notes}, fn multi ->
     update_list(multi, list_id,
       set: [
         notes: notes,
-        status: "completed"
+        status: :completed
       ]
     )
-  end
+  end)
 
-  project %ListDiscarded{list_id: list_id, notes: notes}, fn multi ->
+  project(%ListDiscarded{list_id: list_id, notes: notes}, fn multi ->
     update_list(multi, list_id,
       set: [
         notes: notes,
-        status: "discarded"
+        status: :discarded
       ]
     )
-  end
+  end)
 
-  project %ListReactivated{list_id: list_id, notes: notes}, fn multi ->
+  project(%ListReactivated{list_id: list_id, notes: notes}, fn multi ->
     update_list(multi, list_id,
       set: [
         notes: notes,
-        status: "active"
+        status: :discarded
       ]
     )
-  end
+  end)
 
   def after_update(%ListMade{} = event, _metadata, _changes) do
-    list = 
-      %List{
-        list_id: event.list_id,
-        name: event.name,
-        notes: event.notes,
-        status: "active"
-      }
+    list = %List{
+      list_id: event.list_id,
+      name: event.name,
+      notes: event.notes,
+      status: :active
+    }
 
     list
     |> broadcast("list_made")
+
     :ok
   end
 
   def after_update(%ListDiscarded{} = event, _metadata, _changes) do
-    list = 
-      %List{
-        list_id: event.list_id,
-        notes: event.notes,
-        status: "discarded"
-      }
+    list = %List{
+      list_id: event.list_id,
+      notes: event.notes,
+      status: :discarded
+    }
 
     list
     |> broadcast("list_discarded")
+
     :ok
   end
 

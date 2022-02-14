@@ -1,5 +1,5 @@
 defmodule HoneydewWeb.ListsLive.Detail do
-  @moduledoc"""
+  @moduledoc """
   Where the work in a list gets done.
   """
 
@@ -13,12 +13,14 @@ defmodule HoneydewWeb.ListsLive.Detail do
   data tasks, :list, default: []
 
   def mount(%{"list_id" => list_id}, _session, socket) do
-    tasks = Please.get_tasks_in_list(list_id)
-    socket = 
+    {:ok, tasks} = Please.list_tasks(list_id: list_id)
+
+    socket =
       socket
       |> Surface.init()
       |> assign(current_list: list_id)
       |> assign(tasks: tasks)
+
     {:ok, socket}
   end
 
@@ -42,27 +44,32 @@ defmodule HoneydewWeb.ListsLive.Detail do
   end
 
   def handle_event("show_add_task", _, socket) do
-    Please.add_task("Buy Milk", "Why are we always out of milk?", socket.assigns.current_list)
+    Please.add_task(
+      name: "Buy Milk",
+      notes: "Why are we always out of milk?",
+      list_id: socket.assigns.current_list
+    )
+
     {:noreply, socket}
   end
 
   def handle_event("complete_task", %{"id" => task_id}, socket) do
-    Please.complete_task(task_id, "completed as requested")
+    Please.complete_task(task_id: task_id, notes: "completed as requested")
     {:noreply, socket}
   end
 
   def handle_event("thwart_task", %{"id" => task_id}, socket) do
-    Please.thwart_task(task_id, "it's just not possible")
+    Please.thwart_task(task_id: task_id, notes: "it's just not possible")
     {:noreply, socket}
   end
 
   def handle_event("remove_task", %{"id" => task_id}, socket) do
-    Please.remove_task(task_id, "no longer needed")
+    Please.remove_task(task_id: task_id, notes: "no longer needed")
     {:noreply, socket}
   end
 
   def handle_event("reactivate_task", %{"id" => task_id}, socket) do
-    Please.reactivate_task(task_id, "I want it back")
+    Please.reactivate_task(task_id: task_id, notes: "I want it back")
     {:noreply, socket}
   end
 end

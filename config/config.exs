@@ -7,6 +7,13 @@
 # General application configuration
 import Config
 
+config :cqrs_tools,
+  context_shipper: nil,
+  dispatch_return: :response,
+  create_jason_encoders: true,
+  dispatch_strategy: Cqrs.DispatchStrategy.Default,
+  pipeline_resolver: Honeydew.Cqrs.PipelineResolver
+
 config :commanded, event_store_adapter: Commanded.EventStore.Addapters.EventStore
 
 config :commanded_ecto_projections, repo: Honeydew.Repo
@@ -54,7 +61,8 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 config :surface, :components, [
-  {Surface.Components.Form.ErrorTag, default_translator: {HoneydewWeb.ErrorHelpers, :translate_error}}
+  {Surface.Components.Form.ErrorTag,
+   default_translator: {HoneydewWeb.ErrorHelpers, :translate_error}}
 ]
 
 # Import environment specific config. This must remain at the bottom

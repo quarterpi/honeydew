@@ -3,10 +3,15 @@ defmodule Honeydew.Please.Commands.DiscardList do
   Command to mark list as discarded.
   """
 
-  defstruct [
-    :list_id,
-    :notes
-  ]
+  use Cqrs.Command
+  use Cqrs.Command.EventDerivation
 
-  use ExConstructor
+  field :list_id, :string
+  field :notes, :string
+
+  derive_event Honeydew.Please.Events.ListDiscarded do
+    @moduledoc """
+    Event that signals a list was discarded.
+    """
+  end
 end

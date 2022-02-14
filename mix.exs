@@ -57,7 +57,20 @@ defmodule Honeydew.MixProject do
       {:exconstructor, "~> 1.2.4"},
       {:surface, "~> 0.6.1"},
       {:base62, "~> 1.2"},
-      {:surface_formatter, "~> 0.6.0"}
+      {:surface_formatter, "~> 0.6.0"},
+
+      # cqrs_tools
+      # {:cqrs_tools, github: "elixir-cqrs/cqrs_tools"},
+      # {:cqrs_tools_ddd, github: "elixir-cqrs/cqrs_tools_ddd"},
+      {:cqrs_tools,
+       path: "/Users/chris/code/personal/elixir_cqrs_libs/cqrs_tools", override: true},
+      {:cqrs_tools_ddd,
+       path: "/Users/chris/code/personal/elixir_cqrs_libs/cqrs_tools_ddd", override: true},
+      {:elixir_uuid, "~> 1.6", override: true, hex: :uuid_utils},
+
+      # testing
+      {:faker, "~> 0.17.0", only: :test},
+      {:ex_machina, "~> 2.7", only: :test}
     ]
   end
 
