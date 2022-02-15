@@ -7,11 +7,14 @@ defmodule Honeydew.Please.Projections.Task do
 
   @primary_key {:task_id, :string, []}
 
+  @statuses [:active, :discarded, :completed, :thrwarted, :removed]
+  def statuses, do: @statuses
+
   schema "please_tasks" do
     field :list_id, :string
     field :name, :string
     field :notes, :string
-    field :status, :string
+    field :status, Ecto.Enum, values: @statuses
 
     timestamps()
   end

@@ -1,5 +1,12 @@
 import Config
 
+config :honeydew, Honeydew.App,
+  default_dispatch_opts: [consistency: :strong],
+  event_store: [adapter: Commanded.EventStore.Adapters.InMemory]
+
+config :commanded, Commanded.EventStore.Adapters.InMemory,
+  serializer: Commanded.Serialization.JsonSerializer
+
 # Configure your database
 #
 # The MIX_TEST_PARTITION environment variable can be used

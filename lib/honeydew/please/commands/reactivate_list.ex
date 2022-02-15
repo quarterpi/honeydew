@@ -3,10 +3,15 @@ defmodule Honeydew.Please.Commands.ReactivateList do
   Command to set list as active after being discarded or completed.
   """
 
-  defstruct [
-    :list_id,
-    :notes
-  ]
+  use Cqrs.Command
+  use Cqrs.Command.EventDerivation
 
-  use ExConstructor
+  field :list_id, :string
+  field :notes, :string
+
+  derive_event Honeydew.Please.Events.ListReactivated do
+    @moduledoc """
+       Event indicating that a list has been reactivated after being discarded or completed.
+    """
+  end
 end

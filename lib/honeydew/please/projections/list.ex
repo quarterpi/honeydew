@@ -8,10 +8,13 @@ defmodule Honeydew.Please.Projections.List do
 
   @primary_key {:list_id, :string, []}
 
+  @statuses [:active, :discarded, :completed]
+  def statuses, do: @statuses
+
   schema "please_lists" do
     field :name, :string
     field :notes, :string
-    field :status, :string
+    field :status, Ecto.Enum, values: @statuses
 
     timestamps()
   end

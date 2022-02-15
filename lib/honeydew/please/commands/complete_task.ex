@@ -3,10 +3,19 @@ defmodule Honeydew.Please.Commands.CompleteTask do
   Mark task as completed.
   """
 
-  defstruct [
-    :task_id,
-    :notes
-  ]
+  use Cqrs.Command
+  use Cqrs.Command.EventDerivation
 
-  use ExConstructor
+  alias Honeydew.Please.Projections.Task
+
+  field :task_id, :string
+  field :notes, :string
+
+  derive_event Honeydew.Please.Events.TaskCompleted do
+    @moduledoc """
+    Yay, the task is complete!
+    """
+
+    field :status, :enum, values: Task.statuses(), default: :completed
+  end
 end

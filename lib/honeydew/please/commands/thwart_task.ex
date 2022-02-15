@@ -3,10 +3,18 @@ defmodule Honeydew.Please.Commands.ThwartTask do
   Command that indicates a task is not possible to complete.
   """
 
-  defstruct [
-    :task_id,
-    :notes
-  ]
+  use Cqrs.Command
+  use Cqrs.Command.EventDerivation
 
-  use ExConstructor
+  alias Honeydew.Please.Projections.Task
+
+  field :task_id, :string
+  field :notes, :string
+
+  derive_event Honeydew.Please.Events.TaskThwarted do
+    @moduledoc """
+    A Task was thwarted, meaning that it was not possible to complete.
+    """
+    field :status, :enum, values: Task.statuses(), default: :thrwarted
+  end
 end
