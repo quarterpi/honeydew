@@ -1,10 +1,9 @@
 defmodule Honeydew.Please do
-  @moduledoc """
-  The Please context.
-  """
-
   use Cqrs.BoundedContext
 
+  @moduledoc """
+  The Please Context
+  """
   alias Honeydew.Please.Commands
   alias Honeydew.Please.Queries
 

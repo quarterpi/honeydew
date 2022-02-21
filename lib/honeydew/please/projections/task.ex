@@ -8,6 +8,7 @@ defmodule Honeydew.Please.Projections.Task do
   @primary_key {:task_id, :string, []}
 
   @statuses [:active, :discarded, :completed, :thrwarted, :removed]
+  @doc false
   def statuses, do: @statuses
 
   schema "please_tasks" do

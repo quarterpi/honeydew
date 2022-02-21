@@ -9,6 +9,7 @@ defmodule Honeydew.Please.Projections.List do
   @primary_key {:list_id, :string, []}
 
   @statuses [:active, :discarded, :completed]
+  @doc false
   def statuses, do: @statuses
 
   schema "please_lists" do
