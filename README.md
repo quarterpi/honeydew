@@ -3,8 +3,11 @@
 An example app built on the CELP (Commanded, Elixir, LiveView, PostgreSQL) stack.
 
 Use this example "Honey Do" list app to experiment with CQRS/ES in Commanded. The domain is pretty simple.
-It's a todo list with a little extra suace allowing developers lots of creative freedom.
+It's a todo list with a little extra sauce allowing developers lots of creative freedom.
 
+https://user-images.githubusercontent.com/12484828/155138450-ca6f2787-12e4-49cf-87f7-67884dd7bc34.mp4
+
+## Setup
 You'll need to have PostgreSQL setup and running on your machine. My favourite way to get PostgreSQL setup is via Docker Desktop. Once you have docker installed, you can use this command to get PostgreSQL setup on your machine.
 
 `docker run --rm --name pg-docker -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 postgres`
@@ -34,9 +37,6 @@ For an example of this app ported to use `cqrs_tools` checkout the `with_cqrs_to
 
 
 This is a SUPER rough example meant to get you started without much hassle. It's not meant to be a complete guide. 
-
-https://user-images.githubusercontent.com/12484828/155138450-ca6f2787-12e4-49cf-87f7-67884dd7bc34.mp4
-
 
 If you have any questions, feel free to reach out to me: 
   * on the Elixir Slack @threequarterspi.
