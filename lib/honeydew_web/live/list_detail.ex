@@ -12,7 +12,10 @@ defmodule HoneydewWeb.ListsLive.Detail do
   data current_list, :string, default: ""
   data tasks, :list, default: []
 
+  @topic "task"
+
   def mount(%{"list_id" => list_id}, _session, socket) do
+    HoneydewWeb.Endpoint.subscribe(@topic)
     tasks = Please.get_tasks_in_list(list_id)
     socket = 
       socket
@@ -22,14 +25,65 @@ defmodule HoneydewWeb.ListsLive.Detail do
     {:ok, socket}
   end
 
+  def handle_info(%{event: "task_added"}, socket) do
+    tasks = Please.get_tasks_in_list(socket.assigns.current_list)
+
+    socket =
+      socket
+      |> assign(tasks: tasks)
+
+    {:noreply, socket}
+  end
+
+  def handle_info(%{event: "task_completed", payload: task_id}, socket) do
+    tasks = Please.get_tasks_in_list(socket.assigns.current_list)
+
+    socket =
+      socket
+      |> assign(tasks: tasks)
+
+    {:noreply, socket}
+  end
+
+  def handle_info(%{event: "task_thwarted", payload: task_id}, socket) do
+    tasks = Please.get_tasks_in_list(socket.assigns.current_list)
+
+    socket =
+      socket
+      |> assign(tasks: tasks)
+
+    {:noreply, socket}
+  end
+
+  def handle_info(%{event: "task_removed", payload: task_id}, socket) do
+    tasks = Please.get_tasks_in_list(socket.assigns.current_list)
+
+    socket =
+      socket
+      |> assign(tasks: tasks)
+
+    {:noreply, socket}
+  end
+
+  def handle_info(%{event: "task_reactivated", payload: task_id}, socket) do
+    tasks = Please.get_tasks_in_list(socket.assigns.current_list)
+
+    socket =
+      socket
+      |> assign(tasks: tasks)
+
+    {:noreply, socket}
+  end
+
   def render(assigns) do
     ~F"""
     <div class="list-detail">
       <button :on-click="show_add_task">Add Task</button>
       {#for t <- @tasks}
         <hr />
+
         <div class="task" >
-          <h3>{t.name}</h3>
+          <h3>{t.name} | Status: {t.status}</h3>
           <h5>{t.notes}</h5>
           <button :on-click="complete_task" phx-value-id={t.task_id}>Complete Task</button>
           <button :on-click="thwart_task" phx-value-id={t.task_id}>Thwart Task</button>
