@@ -10,7 +10,33 @@ defmodule Honeydew.MixProject do
       compilers: [:gettext] ++ Mix.compilers() ++ [:surface],
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      docs: [
+        main: "overview",
+        api_reference: false,
+        assets: "guides/assets",
+        extra_section: "GUIDES",
+        extras: ["guides/overview.md"],
+        nest_modules_by_prefix: [
+          Honeydew.Please.Commands,
+          Honeydew.Please.Events,
+          Honeydew.Please.Queries,
+          Honeydew.Please.Projections,
+          Honeydew.Please.Projectors
+        ],
+        groups_for_modules: [
+          Contexts: [Honeydew.Please],
+          Aggregates: [Honeydew.Please.List, Honeydew.Please.Task],
+          Commands: ~r(Honeydew.Please.Commands)i,
+          Events: ~r(Honeydew.Please.Events)i,
+          Queries: ~r(Honeydew.Please.Queries)i,
+          "Read Model": [Honeydew.Repo, ~r(Honeydew.Please.Project[ors|ions])i],
+          "Cqrs Config": ~r(Honeydew.Cqrs)i,
+          Utils: [Honeydew.CustomId],
+          Commanded: [Honeydew.App, Honeydew.EventStore, Honeydew.Router],
+          Phoenix: ~r(HoneydewWeb)i
+        ]
+      ]
     ]
   end
 
@@ -60,17 +86,17 @@ defmodule Honeydew.MixProject do
       {:surface_formatter, "~> 0.6.0"},
 
       # cqrs_tools
-      {:cqrs_tools, github: "elixir-cqrs/cqrs_tools"},
-      {:cqrs_tools_ddd, github: "elixir-cqrs/cqrs_tools_ddd"},
-      # {:cqrs_tools,
-      #  path: "/Users/chris/code/personal/elixir_cqrs_libs/cqrs_tools", override: true},
-      # {:cqrs_tools_ddd,
-      #  path: "/Users/chris/code/personal/elixir_cqrs_libs/cqrs_tools_ddd", override: true},
+      {:cqrs_tools, github: "elixir-cqrs/cqrs_tools", override: true},
+      {:cqrs_tools_ddd, github: "elixir-cqrs/cqrs_tools_ddd", override: true},
+      # {:cqrs_tools, path: "../../cqrs_tools", override: true},
+      # {:cqrs_tools_ddd, path: "../../cqrs_tools_ddd", override: true},
       {:elixir_uuid, "~> 1.6", override: true, hex: :uuid_utils},
+      {:ex_doc, "~> 0.28", only: :dev, runtime: false},
 
       # testing
       {:faker, "~> 0.17.0", only: :test},
-      {:ex_machina, "~> 2.7", only: :test}
+      {:ex_machina, "~> 2.7", only: :test},
+      {:cqrs_toolkit, github: "elixir-cqrs/cqrs_toolkit", runtime: false, only: :dev}
     ]
   end
 
@@ -88,7 +114,8 @@ defmodule Honeydew.MixProject do
       "event_store.init": ["event_store.drop", "event_store.create", "event_store.init"],
       reset: ["event_store.init", "ecto.reset"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
-      "assets.deploy": ["esbuild default --minify", "phx.digest"]
+      "assets.deploy": ["esbuild default --minify", "phx.digest"],
+      view_state: "cqrs.inspect.aggregate"
     ]
   end
 end

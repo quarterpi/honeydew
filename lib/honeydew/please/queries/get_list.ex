@@ -1,4 +1,7 @@
 defmodule Honeydew.Please.Queries.GetList do
+  @moduledoc """
+  Gets a single list
+  """
   use Cqrs.Query
   alias Honeydew.Please.Projections.List
 
