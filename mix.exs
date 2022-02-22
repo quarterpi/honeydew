@@ -96,7 +96,7 @@ defmodule Honeydew.MixProject do
       # testing
       {:faker, "~> 0.17.0", only: :test},
       {:ex_machina, "~> 2.7", only: :test},
-      {:commanded_toolkit, github: "elixir-cqrs/commanded_toolkit", runtime: false, only: :dev}
+      {:cqrs_toolkit, github: "elixir-cqrs/cqrs_toolkit", runtime: false, only: :dev}
     ]
   end
 
@@ -115,7 +115,7 @@ defmodule Honeydew.MixProject do
       reset: ["event_store.init", "ecto.reset"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.deploy": ["esbuild default --minify", "phx.digest"],
-      view_state: "commanded.inspect.aggregate"
+      view_state: "cqrs.inspect.aggregate"
     ]
   end
 end
