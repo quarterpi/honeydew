@@ -35,6 +35,9 @@ For an example of this app ported to use `cqrs_tools` checkout the `with_cqrs_to
 
 This is a SUPER rough example meant to get you started without much hassle. It's not meant to be a complete guide. 
 
+https://user-images.githubusercontent.com/12484828/155138450-ca6f2787-12e4-49cf-87f7-67884dd7bc34.mp4
+
+
 If you have any questions, feel free to reach out to me: 
   * on the Elixir Slack @threequarterspi.
   * on twitter @threequarterspi
