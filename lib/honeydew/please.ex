@@ -1,5 +1,5 @@
 defmodule Honeydew.Please do
-  use Cqrs.BoundedContext
+  use Blunt.Context
 
   @moduledoc """
   The Please Context

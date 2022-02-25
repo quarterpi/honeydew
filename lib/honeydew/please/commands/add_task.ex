@@ -3,8 +3,8 @@ defmodule Honeydew.Please.Commands.AddTask do
   Add a task.
   """
 
-  use Cqrs.Command
-  use Cqrs.Command.EventDerivation
+  use Blunt.Command
+  use Blunt.Command.EventDerivation
 
   alias Honeydew.Please.Projections.Task
 
@@ -16,6 +16,7 @@ defmodule Honeydew.Please.Commands.AddTask do
 
   @impl true
   def after_validate(command) do
+    IO.puts("lkssdsdds")
     %{command | task_id: Honeydew.CustomId.new()}
   end
 

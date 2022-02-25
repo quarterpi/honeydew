@@ -3,8 +3,8 @@ defmodule Honeydew.Please.Commands.RemoveTask do
   Mercifully, attempt to remove a task.
   """
 
-  use Cqrs.Command
-  use Cqrs.Command.EventDerivation
+  use Blunt.Command
+  use Blunt.Command.EventDerivation
   alias Honeydew.Please.Projections.Task
 
   field :task_id, :string

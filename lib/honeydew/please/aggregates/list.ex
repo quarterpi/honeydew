@@ -1,5 +1,5 @@
 defmodule Honeydew.Please.List do
-  use Cqrs.Ddd
+  use Blunt.Ddd
 
   @moduledoc """
   List Aggregate in Please Context.
@@ -8,7 +8,7 @@ defmodule Honeydew.Please.List do
   alias Honeydew.Please.Projections.List
   alias Honeydew.Please.Commands.{MakeList, CompleteList, DiscardList, ReactivateList}
 
-  aggregate_state do
+  defstate do
     field :list_id, :string
     field :status, :enum, values: List.statuses()
   end

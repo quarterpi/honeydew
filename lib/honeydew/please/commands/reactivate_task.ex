@@ -3,8 +3,8 @@ defmodule Honeydew.Please.Commands.ReactivateTask do
   UGH! Reactivate the task.
   """
 
-  use Cqrs.Command
-  use Cqrs.Command.EventDerivation
+  use Blunt.Command
+  use Blunt.Command.EventDerivation
 
   alias Honeydew.Please.Projections.Task
 

@@ -3,8 +3,8 @@ defmodule Honeydew.Please.Commands.ReactivateList do
   Command to set list as active after being discarded or completed.
   """
 
-  use Cqrs.Command
-  use Cqrs.Command.EventDerivation
+  use Blunt.Command
+  use Blunt.Command.EventDerivation
 
   field :list_id, :string
   field :notes, :string

@@ -3,8 +3,8 @@ defmodule Honeydew.Please.Commands.ThwartTask do
   Command that indicates a task is not possible to complete.
   """
 
-  use Cqrs.Command
-  use Cqrs.Command.EventDerivation
+  use Blunt.Command
+  use Blunt.Command.EventDerivation
 
   alias Honeydew.Please.Projections.Task
 
