@@ -23,7 +23,14 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 This app is not ready for production. 
 
 ## Blunt (Formerly CQRS_TOOLS)
-For an example of this app ported to use `blunt` (Formerly `cqrs_tools`) checkout the `with_cqrs_tools` branch!
+For an example of this app ported to use `blunt` (Formerly `cqrs_tools`) checkout the `with_blunt` branch!
+If you have a local copy of the `with_cqrs_tools` branch, you'll want to update with the following commands.
+```
+git branch -m with_cqrs_tools with_blunt
+git fetch origin
+git branch -u origin/with_blunt with_blunt
+git remote set-head origin -a
+```
 
 ## Learn more
 
