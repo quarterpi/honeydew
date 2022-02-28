@@ -1,7 +1,7 @@
 defmodule Honeydew.Please.Queries.GetListPipeline do
-  use Cqrs.QueryPipeline
+  use Blunt.QueryPipeline
 
-  alias Cqrs.Query
+  alias Blunt.Query
   alias Honeydew.Repo
   alias Honeydew.Please.Projections.List
 

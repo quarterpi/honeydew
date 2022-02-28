@@ -5,7 +5,7 @@ defmodule Honeydew.PleaseTest do
   alias Honeydew.Please.Commands
 
   # Setup convenience factories
-  use Cqrs.Testing.ExMachina
+  use Blunt.Testing.ExMachina
 
   # This replaces please_fixtures
   # you can call

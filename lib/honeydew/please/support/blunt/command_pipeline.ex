@@ -1,6 +1,9 @@
-defmodule Honeydew.Cqrs.CommandPipeline do
-  @behaviour Cqrs.CommandPipeline
-  alias Cqrs.DispatchContext, as: Context
+defmodule Honeydew.Blunt.CommandPipeline do
+  @moduledoc """
+  Dispatches commands directly to Commanded and returns the results.
+  """
+  @behaviour Blunt.CommandPipeline
+  alias Blunt.DispatchContext, as: Context
   alias Commanded.Commands.ExecutionResult
 
   def handle_dispatch(command, context) do

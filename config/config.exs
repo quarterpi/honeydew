@@ -7,13 +7,13 @@
 # General application configuration
 import Config
 
-config :cqrs_tools,
+config :blunt,
   context_shipper: nil,
   log_when_compiling: false,
   dispatch_return: :response,
   create_jason_encoders: true,
-  dispatch_strategy: Cqrs.DispatchStrategy.Default,
-  pipeline_resolver: Honeydew.Cqrs.PipelineResolver
+  dispatch_strategy: Blunt.DispatchStrategy.Default,
+  pipeline_resolver: Honeydew.Blunt.PipelineResolver
 
 config :commanded, event_store_adapter: Commanded.EventStore.Addapters.EventStore
 

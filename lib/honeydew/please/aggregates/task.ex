@@ -1,5 +1,5 @@
 defmodule Honeydew.Please.Task do
-  use Cqrs.Ddd
+  use Blunt.Ddd
 
   @moduledoc """
   Aggregate for Tasks in Please context.
@@ -17,7 +17,7 @@ defmodule Honeydew.Please.Task do
 
   alias Honeydew.Please.Projections.Task
 
-  aggregate_state do
+  defstate do
     field :task_id, :string
     field :status, :enum, values: Task.statuses()
   end

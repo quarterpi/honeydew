@@ -31,7 +31,7 @@ defmodule Honeydew.MixProject do
           Events: ~r(Honeydew.Please.Events)i,
           Queries: ~r(Honeydew.Please.Queries)i,
           "Read Model": [Honeydew.Repo, ~r(Honeydew.Please.Project[ors|ions])i],
-          "Cqrs Config": ~r(Honeydew.Cqrs)i,
+          "Blunt Config": ~r(Honeydew.Blunt)i,
           Utils: [Honeydew.CustomId],
           Commanded: [Honeydew.App, Honeydew.EventStore, Honeydew.Router],
           Phoenix: ~r(HoneydewWeb)i
@@ -85,18 +85,18 @@ defmodule Honeydew.MixProject do
       {:base62, "~> 1.2"},
       {:surface_formatter, "~> 0.6.0"},
 
-      # cqrs_tools
-      {:cqrs_tools, github: "elixir-cqrs/cqrs_tools", override: true},
-      {:cqrs_tools_ddd, github: "elixir-cqrs/cqrs_tools_ddd", override: true},
-      # {:cqrs_tools, path: "../../cqrs_tools", override: true},
-      # {:cqrs_tools_ddd, path: "../../cqrs_tools_ddd", override: true},
-      {:elixir_uuid, "~> 1.6", override: true, hex: :uuid_utils},
+      # blunt
+      {:blunt, "~> 0.1"},
+      {:blunt_ddd, "~> 0.1"},
+
+      # Docs
       {:ex_doc, "~> 0.28", only: :dev, runtime: false},
 
       # testing
       {:faker, "~> 0.17.0", only: :test},
       {:ex_machina, "~> 2.7", only: :test},
-      {:cqrs_toolkit, github: "elixir-cqrs/cqrs_toolkit", runtime: false, only: :dev}
+      {:elixir_uuid, "~> 1.6", override: true, hex: :uuid_utils},
+      {:blunt_toolkit, github: "blunt-elixir/blunt_toolkit", runtime: false, only: :dev}
     ]
   end
 
@@ -115,7 +115,7 @@ defmodule Honeydew.MixProject do
       reset: ["event_store.init", "ecto.reset"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.deploy": ["esbuild default --minify", "phx.digest"],
-      view_state: "cqrs.inspect.aggregate"
+      view_state: "blunt.inspect.aggregate"
     ]
   end
 end

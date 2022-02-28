@@ -5,8 +5,8 @@ defmodule Honeydew.Please.ListTest do
   alias Honeydew.Please.Events.ListMade
   alias Honeydew.Please.Commands.MakeList
 
-  use Cqrs.Testing.ExMachina
-  use Cqrs.Testing.AggregateCase, aggregate: List
+  use Blunt.Testing.ExMachina
+  use Blunt.Testing.AggregateCase, aggregate: List
 
   factory MakeList
   factory ListMade

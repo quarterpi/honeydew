@@ -3,8 +3,8 @@ defmodule Honeydew.Please.Commands.DiscardList do
   Command to mark list as discarded.
   """
 
-  use Cqrs.Command
-  use Cqrs.Command.EventDerivation
+  use Blunt.Command
+  use Blunt.Command.EventDerivation
 
   field :list_id, :string
   field :notes, :string

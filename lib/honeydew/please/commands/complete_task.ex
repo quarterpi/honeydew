@@ -3,8 +3,8 @@ defmodule Honeydew.Please.Commands.CompleteTask do
   Mark task as completed.
   """
 
-  use Cqrs.Command
-  use Cqrs.Command.EventDerivation
+  use Blunt.Command
+  use Blunt.Command.EventDerivation
 
   alias Honeydew.Please.Projections.Task
 

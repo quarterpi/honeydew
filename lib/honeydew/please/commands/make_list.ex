@@ -3,8 +3,8 @@ defmodule Honeydew.Please.Commands.MakeList do
   Command to make a new list.
   """
 
-  use Cqrs.Command
-  use Cqrs.Command.EventDerivation
+  use Blunt.Command
+  use Blunt.Command.EventDerivation
 
   field :notes, :string
   field :name, :string
